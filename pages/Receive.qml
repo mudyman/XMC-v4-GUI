@@ -64,7 +64,7 @@ Rectangle {
     function generateQRCodeString() {
         if (pageReceive.state == "PaymentRequest") {
             return walletManager.make_uri(appWindow.current_address,
-                walletManager.amountFromString(amountToReceiveXMR.text),
+                walletManager.amountFromString(amountToReceiveXMC.text),
                 txDescriptionInput.text, receiverNameInput.text);
         } else {
             return walletManager.make_uri(appWindow.current_address);
@@ -256,9 +256,9 @@ Rectangle {
                             }
                         }
                         if (amountToReceiveFiat.text == "") {
-                            amountToReceiveXMR.text = "";
+                            amountToReceiveXMC.text = "";
                         } else {
-                            amountToReceiveXMR.text = fiatApiConvertToXMR(amountToReceiveFiat.text);
+                            amountToReceiveXMC.text = fiatApiConvertToXMC(amountToReceiveFiat.text);
                         }
                     }
                     validator: RegExpValidator {
@@ -274,7 +274,7 @@ Rectangle {
                 }
 
                 MoneroComponents.Label {
-                    id: amountTitleXMR
+                    id: amountTitleXMC
                     Layout.bottomMargin: 3
                     Layout.preferredWidth: 90
                     fontSize: 14
@@ -282,7 +282,7 @@ Rectangle {
                 }
 
                 MoneroComponents.Input {
-                    id: amountToReceiveXMR
+                    id: amountToReceiveXMC
                     Layout.preferredWidth: 165
                     Layout.maximumWidth: 165
                     topPadding: 5
@@ -315,10 +315,10 @@ Rectangle {
                                 cursorPosition = 1;
                             }
                         }
-                        if (amountToReceiveXMR.text == "") {
+                        if (amountToReceiveXMC.text == "") {
                             amountToReceiveFiat.text = "";
                         } else {
-                            amountToReceiveFiat.text = fiatApiConvertToFiat(amountToReceiveXMR.text);
+                            amountToReceiveFiat.text = fiatApiConvertToFiat(amountToReceiveXMC.text);
                         }
                     }
                     validator: RegExpValidator {
@@ -329,7 +329,7 @@ Rectangle {
                 MoneroComponents.Label {
                     Layout.bottomMargin: 3
                     fontSize: 14
-                    text: "XMR"
+                    text: "XMC"
                 }
 
                 MoneroComponents.Label {
@@ -783,7 +783,7 @@ Rectangle {
 
     function clearFields() {
         amountToReceiveFiat.text = "";
-        amountToReceiveXMR.text = "";
+        amountToReceiveXMC.text = "";
         txDescriptionInput.text = "";
         receiverNameInput.text = "";
     }

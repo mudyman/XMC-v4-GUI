@@ -265,33 +265,21 @@ Rectangle {
             visible: root.state == "essentials"
         }
 
-        // monero logo
+        // monero classic logo text
         Item {
             visible: walletName.length === 0
             Layout.fillWidth: true
             Layout.preferredHeight: parent.height
 
-            Image {
-                id: imgLogo
-                width: 125
-                height: 28
-
+            Text {
+                id: logoText
+                text: "MONERO CLASSIC"
+                font.family: MoneroComponents.Style.fontRegular.name
+                font.pixelSize: 16
+                font.bold: true
+                color: MoneroComponents.Style.defaultFontColor
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
-
-                source: MoneroComponents.Style.titleBarLogoSource
-                visible: {
-                    if(!isOpenGL) return true;
-                    if(!MoneroComponents.Style.blackTheme) return true;
-                    return false;
-                }
-            }
-
-            Colorize {
-                visible: isOpenGL && MoneroComponents.Style.blackTheme
-                anchors.fill: imgLogo
-                source: imgLogo
-                saturation: 0.0
             }
         }
 

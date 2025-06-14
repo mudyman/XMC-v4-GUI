@@ -159,7 +159,7 @@ Rectangle {
                     anchors.rightMargin: 8
                     font.pixelSize: 12
                     font.bold: true
-                    color: "#ff9323"
+                    color: "#008CEB"
                     themeTransition: false
                 }
             }
@@ -230,7 +230,7 @@ Rectangle {
                         if (persistentSettings.fiatPriceEnabled && persistentSettings.fiatPriceToggle) {
                             return appWindow.fiatApiCurrencySymbol();
                         } else {
-                            return "XMR"
+                            return "XMC"
                         }
                     }
                     color: MoneroComponents.Style.blackTheme ? "white" : "black"

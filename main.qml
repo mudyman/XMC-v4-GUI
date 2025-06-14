@@ -55,7 +55,7 @@ import "version.js" as Version
 
 ApplicationWindow {
     id: appWindow
-    title: "Monero" +
+    title: "Monero Classic" +
         (persistentSettings.displayWalletNameInTitleBar && walletName
         ? " - " + walletName
         : "")
@@ -104,17 +104,9 @@ ApplicationWindow {
     property real fiatPrice: 0
     property var fiatPriceAPIs: {
         return {
-            "kraken": {
-                "xmrusd": "https://api.kraken.com/0/public/Ticker?pair=XMRUSD",
-                "xmreur": "https://api.kraken.com/0/public/Ticker?pair=XMREUR"
-            },
-            "coingecko": {
-                "xmrusd": "https://api.coingecko.com/api/v3/simple/price?ids=monero&vs_currencies=usd",
-                "xmreur": "https://api.coingecko.com/api/v3/simple/price?ids=monero&vs_currencies=eur"
-            },
-            "cryptocompare": {
-                "xmrusd": "https://min-api.cryptocompare.com/data/price?fsym=XMR&tsyms=USD",
-                "xmreur": "https://min-api.cryptocompare.com/data/price?fsym=XMR&tsyms=EUR",
+            "tradeogre": {
+                "xmcusd": "https://tradeogre.com/api/v1/ticker/XMC-USDT",
+                "xmceur": "https://tradeogre.com/api/v1/ticker/XMC-BTC"
             }
         }
     }
@@ -415,8 +407,8 @@ ApplicationWindow {
         leftPanel.balanceString = balance
         leftPanel.balanceUnlockedString = balanceU
         if (middlePanel.state === "Account") {
-            middlePanel.accountView.balanceAllText = walletManager.displayAmount(appWindow.currentWallet.balanceAll()) + " XMR";
-            middlePanel.accountView.unlockedBalanceAllText = walletManager.displayAmount(appWindow.currentWallet.unlockedBalanceAll()) + " XMR";
+            middlePanel.accountView.balanceAllText = walletManager.displayAmount(appWindow.currentWallet.balanceAll()) + " XMC";
+            middlePanel.accountView.unlockedBalanceAllText = walletManager.displayAmount(appWindow.currentWallet.unlockedBalanceAll()) + " XMC";
         }
     }
 
@@ -754,7 +746,7 @@ ApplicationWindow {
         // resume refresh
         currentWallet.startRefresh();
         informationPopup.title = qsTr("Daemon failed to start") + translationManager.emptyString;
-        informationPopup.text  = error + ".\n\n" + qsTr("Please check your wallet and daemon log for errors. You can also try to start %1 manually.").arg((isWindows)? "monerod.exe" : "monerod")
+        informationPopup.text  = error + ".\n\n" + qsTr("Please check your wallet and daemon log for errors. You can also try to start %1 manually.").arg((isWindows)? "moneroclassicd.exe" : "moneroclassicd")
         if (middlePanel.advancedView.miningView.stopMiningEnabled == true) {
             walletManager.stopMining()
             p2poolManager.exit()
@@ -890,10 +882,10 @@ ApplicationWindow {
             const addresses = recipients.map(function (recipient) {
                 return recipient.address;
             });
-            const amountsxmr = recipients.map(function (recipient) {
+            const amountsxmc = recipients.map(function (recipient) {
                 return recipient.amount;
             });
-            currentWallet.createTransactionAsync(addresses, paymentId, amountsxmr, mixinCount, priority);
+            currentWallet.createTransactionAsync(addresses, paymentId, amountsxmc, mixinCount, priority);
         }
     }
 
@@ -1160,29 +1152,21 @@ ApplicationWindow {
 
     function fiatApiParseTicker(url, resp, currency){
         // parse & validate incoming JSON
-        if(url.startsWith("https://api.kraken.com/0/")){
-            if(resp.hasOwnProperty("error") && resp.error.length > 0 || !resp.hasOwnProperty("result")){
-                appWindow.fiatApiError("Kraken API has error(s)");
+        if(url.startsWith("https://tradeogre.com/api/v1/")){
+            if(!resp.hasOwnProperty("success") || resp.success !== true || !resp.hasOwnProperty("price")){
+                appWindow.fiatApiError("TradeOgre API has error(s)");
                 return;
             }
-
-            var key = currency === "xmreur" ? "XXMRZEUR" : "XXMRZUSD";
-            var ticker = resp.result[key]["c"][0];
-            return ticker;
-        } else if(url.startsWith("https://api.coingecko.com/api/v3/")){
-            var key = currency === "xmreur" ? "eur" : "usd";
-            if(!resp.hasOwnProperty("monero") || !resp["monero"].hasOwnProperty(key)){
-                appWindow.fiatApiError("Coingecko API has error(s)");
-                return;
+            
+            // For XMC-USDT, return price directly
+            if(currency === "xmcusd"){
+                return parseFloat(resp.price);
             }
-            return resp["monero"][key];
-        } else if(url.startsWith("https://min-api.cryptocompare.com/data/")){
-            var key = currency === "xmreur" ? "EUR" : "USD";
-            if(!resp.hasOwnProperty(key)){
-                appWindow.fiatApiError("cryptocompare API has error(s)");
-                return;
+            // For XMC-BTC, we would need to convert to EUR through another API
+            // For now, just return the BTC price (user will see BTC value)
+            else if(currency === "xmceur"){
+                return parseFloat(resp.price);
             }
-            return resp[key];
         }
     }
 
@@ -1257,9 +1241,9 @@ ApplicationWindow {
 
     function fiatApiCurrencySymbol() {
         switch (persistentSettings.fiatPriceCurrency) {
-            case "xmrusd":
+            case "xmcusd":
                 return "USD";
-            case "xmreur":
+            case "xmceur":
                 return "EUR";
             default:
                 console.error("unsupported currency", persistentSettings.fiatPriceCurrency);
@@ -1276,13 +1260,13 @@ ApplicationWindow {
         return (amount * ticker).toFixed(2);
     }
 
-    function fiatApiConvertToXMR(amount) {
+    function fiatApiConvertToXMC(amount) {
         const ticker = appWindow.fiatPrice;
         if(ticker <= 0){
             fiatApiError("Invalid ticker value: " + ticker);
             return "?.??";
         }
-        return (amount / ticker).toFixed(12);
+        return (amount / ticker).toFixed(11);
     }
 
     function fiatApiUpdateBalance(balance){
@@ -1442,8 +1426,8 @@ ApplicationWindow {
 
         property bool fiatPriceEnabled: false
         property bool fiatPriceToggle: false
-        property string fiatPriceProvider: "kraken"
-        property string fiatPriceCurrency: "xmrusd"
+        property string fiatPriceProvider: "tradeogre"
+        property string fiatPriceCurrency: "xmcusd"
 
         property string proxyAddress: "127.0.0.1:9050"
         property bool proxyEnabled: isTails
@@ -1954,7 +1938,7 @@ ApplicationWindow {
             property alias text: content.text
             width: content.width + 12
             height: content.height + 17
-            color: "#FF6C3C"
+            color: "#008CEB"
             //radius: 3
             visible:false;
 

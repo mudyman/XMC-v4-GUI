@@ -99,7 +99,7 @@ Rectangle {
             MoneroComponents.TextBlock {
                 id: guiMoneroVersion
                 font.pixelSize: 14
-                text: qsTr("Embedded Monero version: ") + translationManager.emptyString
+                text: qsTr("Embedded Monero Classic version: ") + translationManager.emptyString
             }
 
             MoneroComponents.TextBlock {
@@ -140,7 +140,7 @@ Rectangle {
                 property string walletPath: (isIOS ?  appWindow.accountsDir : "") + persistentSettings.wallet_path
                 text: "\
                     <style type='text/css'>\
-                        a {cursor:pointer;text-decoration: none; color: #FF6C3C}\
+                        a {cursor:pointer;text-decoration: none; color: #008CEB}\
                     </style>\
                     <a href='#'>%1</a>".arg(walletPath)
                 textFormat: Text.RichText
@@ -184,7 +184,7 @@ Rectangle {
                 textFormat: Text.RichText
                 color: MoneroComponents.Style.dimmedFontColor
                 font.pixelSize: 14
-                property var style: "<style type='text/css'>a {cursor:pointer;text-decoration: none; color: #FF6C3C}</style>"
+                property var style: "<style type='text/css'>a {cursor:pointer;text-decoration: none; color: #008CEB}</style>"
                 text: (currentWallet ? currentWallet.walletCreationHeight : "") + style + " <a href='#'> (%1)</a>".arg(qsTr("Change")) + translationManager.emptyString
                 onLinkActivated: {
                     inputDialog.labelText = qsTr("Set a new restore height.\nYou can enter a block height or a date (YYYY-MM-DD):") + translationManager.emptyString;
@@ -266,7 +266,7 @@ Rectangle {
                 font.pixelSize: 14
                 text: "\
                     <style type='text/css'>\
-                        a {cursor:pointer;text-decoration: none; color: #FF6C3C}\
+                        a {cursor:pointer;text-decoration: none; color: #008CEB}\
                     </style>\
                     <a href='#'>%1</a>".arg(logger.logFilePath)
                 textFormat: Text.RichText

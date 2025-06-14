@@ -69,7 +69,7 @@
     </message>
     <message>
         <location filename="../pages/AddressBook.qml" line="93"/>
-        <source>This makes it easier to send or receive Monero and reduces errors when typing in addresses manually.</source>
+        <source>This makes it easier to send or receive Monero Classic and reduces errors when typing in addresses manually.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1717,7 +1717,7 @@ Mining also gives you a small chance to earn some Monero. Your computer will cre
     </message>
     <message>
         <location filename="../pages/settings/SettingsInfo.qml" line="102"/>
-        <source>Embedded Monero version: </source>
+        <source>Embedded Monero Classic version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2683,7 +2683,7 @@ You can change the password in the wallet settings.</source>
     </message>
     <message>
         <location filename="../pages/Transfer.qml" line="169"/>
-        <source>Spendable funds: %1 XMR. Please wait ~%2 minutes for your whole balance to become spendable.</source>
+        <source>Spendable funds: %1 XMC. Please wait ~%2 minutes for your whole balance to become spendable.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2867,7 +2867,7 @@ Confirmation message:
     </message>
     <message>
         <location filename="../pages/Transfer.qml" line="985"/>
-        <source>Spend XMR from a cold (offline) wallet</source>
+        <source>Spend XMC from a cold (offline) wallet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3169,7 +3169,7 @@ For reserve proofs you don&apos;t need to specify tx id or address.</source>
     </message>
     <message>
         <location filename="../pages/TxKey.qml" line="109"/>
-        <source>Paste amount of XMR (reserve proof only)</source>
+        <source>Paste amount of XMC (reserve proof only)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -1,6 +1,7 @@
-# Monero GUI
+# Monero Classic GUI
 
 Copyright (c) 2014-2022, The Monero Project
+Adapted for Monero Classic V4
 
 ## Table of Contents
   * [Development resources](#development-resources)
