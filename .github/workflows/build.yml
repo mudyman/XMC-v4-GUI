@@ -117,7 +117,7 @@ jobs:
         name: ${{ github.job }}
         path: |
           /home/runner/work/monero-gui/monero-gui/build/release/bin/monero-wallet-gui
-          /home/runner/work/monero-gui/monero-gui/build/release/bin/monerod
+          /home/runner/work/monero-gui/monero-gui/build/release/bin/moneroclassicd
 
   docker-windows-static:
     runs-on: ubuntu-20.04
@@ -143,7 +143,7 @@ jobs:
         name: ${{ github.job }}
         path: |
           /home/runner/work/monero-gui/monero-gui/build/x86_64-w64-mingw32/release/bin/monero-wallet-gui.exe
-          /home/runner/work/monero-gui/monero-gui/build/x86_64-w64-mingw32/release/bin/monerod.exe
+          /home/runner/work/monero-gui/monero-gui/build/x86_64-w64-mingw32/release/bin/moneroclassicd.exe
 
   docker-android:
     runs-on: ubuntu-20.04
