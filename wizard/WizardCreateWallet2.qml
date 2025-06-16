@@ -86,10 +86,10 @@ Rectangle {
         visible: false
         text: qsTr("Print this paper, fill it out, and keep it in a safe location. Never share your recovery phrase with anybody, especially with strangers offering technical support.") +
               qsTr("Recovery phrase (mnemonic seed)") +
-              qsTr("These words are are a backup of your wallet. They are the only thing needed to access your funds and restore your Monero wallet, so keep this paper in a safe place and do not disclose it to anybody! It is strongly not recommended to store your recovery phrase digitally (in an email, online service, screenshot, photo, or any other type of computer file).") +
+              qsTr("These words are are a backup of your wallet. They are the only thing needed to access your funds and restore your Monero Classic wallet, so keep this paper in a safe place and do not disclose it to anybody! It is strongly not recommended to store your recovery phrase digitally (in an email, online service, screenshot, photo, or any other type of computer file).") +
               qsTr("Wallet creation date") +
               qsTr("Wallet restore height") +
-              qsTr("For instructions on how to restore this wallet, visit www.getmonero.org and go to Resources > User Guides > \"How to restore a wallet from mnemonic seed\". Use only Monero wallets that are trusted and recommended by the Monero community (see a list of them in www.getmonero.org/downloads).") + translationManager.emptyString
+              qsTr("For instructions on how to restore this wallet, visit www.monero-classic.org and go to Resources > User Guides > \"How to restore a wallet from mnemonic seed\". Use only Monero Classic wallets that are trusted and recommended by the Monero Classic community (see a list of them in www.monero-classic.org/downloads).") + translationManager.emptyString
     }
 
     ColumnLayout {
@@ -386,7 +386,9 @@ Rectangle {
                         tooltipIconVisible: true
                         themeTransition: false
                         Accessible.role: Accessible.StaticText
-                        Accessible.name: qsTr("Restore height") + " " + Utils.roundDownToNearestThousand(wizardController.m_wallet ? wizardController.m_wallet.walletCreationHeight : 0) + translationManager.emptyString
+                        Accessible.name: qsTr("Restore height") + " " + Utils.roundDownToNearestThousand(wizardController.walletOptionsRestoreHeight > 0 ? 
+                            wizardController.walletOptionsRestoreHeight : 
+                            Wizard.getApproximateBlockchainHeight(new Date().toISOString().split('T')[0], Utils.netTypeToString())) + translationManager.emptyString
                         KeyNavigation.up: walletCreationDate
                         KeyNavigation.backtab: walletCreationDate
                         Keys.onDownPressed: navigation.btnPrev.forceActiveFocus();
@@ -400,7 +402,9 @@ Rectangle {
                         font.bold: true
                         textFormat: Text.RichText
                         color: MoneroComponents.Style.defaultFontColor
-                        text: Utils.roundDownToNearestThousand(wizardController.m_wallet ? wizardController.m_wallet.walletCreationHeight : 0)
+                        text: Utils.roundDownToNearestThousand(wizardController.walletOptionsRestoreHeight > 0 ? 
+                            wizardController.walletOptionsRestoreHeight : 
+                            Wizard.getApproximateBlockchainHeight(new Date().toISOString().split('T')[0], Utils.netTypeToString()))
                     }
                 }
             }

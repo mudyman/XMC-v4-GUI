@@ -413,8 +413,8 @@ ApplicationWindow {
     }
 
     function onUriHandler(uri){
-        if(uri.startsWith("monero://")){
-            var address = uri.substring("monero://".length);
+        if(uri.startsWith("monero-classic://")){
+            var address = uri.substring("monero-classic://".length);
 
             var params = {}
             if(address.length === 0) return;
@@ -1055,10 +1055,10 @@ ApplicationWindow {
                 informationPopup.icon = StandardIcon.Critical;
             } else if (received > 0) {
                 if (in_pool) {
-                    informationPopup.text = qsTr("This address received %1 monero, but the transaction is not yet mined").arg(walletManager.displayAmount(received));
+                    informationPopup.text = qsTr("This address received %1 xmc, but the transaction is not yet mined").arg(walletManager.displayAmount(received));
                 }
                 else {
-                    informationPopup.text = qsTr("This address received %1 monero, with %2 confirmation(s).").arg(walletManager.displayAmount(received)).arg(confirmations);
+                    informationPopup.text = qsTr("This address received %1 xmc, with %2 confirmation(s).").arg(walletManager.displayAmount(received)).arg(confirmations);
                 }
             }
             else {
@@ -1341,7 +1341,7 @@ ApplicationWindow {
                 oshelper.createDesktopEntry();
             } else if (isLinux) {
                 confirmationDialog.title = qsTr("Desktop entry") + translationManager.emptyString;
-                confirmationDialog.text  = qsTr("Would you like to register Monero GUI Desktop entry?") + translationManager.emptyString;
+                confirmationDialog.text  = qsTr("Would you like to register Monero Classic GUI Desktop entry?") + translationManager.emptyString;
                 confirmationDialog.icon = StandardIcon.Question;
                 confirmationDialog.cancelText = qsTr("No") + translationManager.emptyString;
                 confirmationDialog.okText = qsTr("Yes") + translationManager.emptyString;
@@ -1405,7 +1405,26 @@ ApplicationWindow {
                         password: daemonPassword,
                         trusted: is_trusted_daemon,
                     }]
-                    : [],
+                    : [
+                        {
+                            address: "node1.monero-classic.org:18081",
+                            username: "",
+                            password: "",
+                            trusted: true,
+                        },
+                        {
+                            address: "node2.monero-classic.org:18081",
+                            username: "",
+                            password: "",
+                            trusted: true,
+                        },
+                        {
+                            address: "node3.monero-classic.org:18081",
+                            username: "",
+                            password: "",
+                            trusted: true,
+                        },
+                    ],
             })
         property string bootstrapNodeAddress: ""
         property bool segregatePreForkOutputs: true

@@ -979,7 +979,7 @@ Rectangle {
                                     id: btnDetails
                                     text: FontAwesome.info
                                     small: true
-                                    label.font.family: FontAwesome.fontFamily
+                                    label.font.family: FontAwesome.fontFamilySolid
                                     fontSize: 18
                                     width: 34
                                     tooltip: qsTr("Transaction details") + translationManager.emptyString

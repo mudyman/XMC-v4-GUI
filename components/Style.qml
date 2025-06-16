@@ -116,7 +116,7 @@ QtObject {
     property string _b_titleBarBackgroundGradientStart: "#262626";
     property string _b_titleBarBackgroundGradientStop: "#191919"
     property string _b_titleBarBackgroundBorderColor: "#2f2f2f"
-    property string _b_titleBarLogoSource: "qrc:///images/titlebarLogo.png"
+    property string _b_titleBarLogoSource: "qrc:///images/titlebarLogo_xmc.svg"
     property string _b_titleBarMinimizeSource: "qrc:///images/minimize.svg"
     property string _b_titleBarFullscreenSource: "qrc:///images/fullscreen.svg"
     property string _b_titleBarCloseSource: "qrc:///images/close.svg"
@@ -178,7 +178,7 @@ QtObject {
     property string _w_titleBarBackgroundGradientStart: "#fcfcfc"
     property string _w_titleBarBackgroundGradientStop: "#FBFBFB"
     property string _w_titleBarBackgroundBorderColor: "#DEDEDE"
-    property string _w_titleBarLogoSource: "qrc:///images/themes/white/titlebarLogo.png"
+    property string _w_titleBarLogoSource: "qrc:///images/themes/white/titlebarLogo_xmc.svg"
     property string _w_titleBarMinimizeSource: "qrc:///images/themes/white/minimize.svg"
     property string _w_titleBarFullscreenSource: "qrc:///images/themes/white/fullscreen.svg"
     property string _w_titleBarCloseSource: "qrc:///images/themes/white/close.svg"

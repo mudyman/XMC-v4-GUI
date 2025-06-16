@@ -407,9 +407,9 @@ Rectangle {
 
             MoneroComponents.StandardButton {
                 small: true
-                text: qsTr("Donate to Monero") + translationManager.emptyString
+                text: qsTr("Donate to Monero Classic") + translationManager.emptyString
                 onClicked: {
-                    middlePanel.sendTo("888tNkZrPN6JsEgekjMnABU4TBzc2Dt29EPAvkRxbANsAnjyPbb3iQ1YBRk1UXcdRsiKc9dhwMVgN5S9cQUiyoogDavup3H", "", qsTr("Donation to Monero Core Team") + translationManager.emptyString);
+                    middlePanel.sendTo("888tNkZrPN6JsEgekjMnABU4TBzc2Dt29EPAvkRxbANsAnjyPbb3iQ1YBRk1UXcdRsiKc9dhwMVgN5S9cQUiyoogDavup3H", "", qsTr("Donation to Monero Classic Core Team") + translationManager.emptyString);
                 }
             }
         }

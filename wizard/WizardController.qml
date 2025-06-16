@@ -66,7 +66,7 @@ Rectangle {
         wizardController.walletOptionsRecoverSpendkey = ''
         wizardController.walletOptionsBackup = '';
         wizardController.walletRestoreMode = 'seed';
-        wizardController.walletOptionsRestoreHeight = 0;
+        wizardController.walletOptionsRestoreHeight = Wizard.getApproximateBlockchainHeight(new Date().toISOString().split('T')[0], Utils.netTypeToString());
         wizardController.walletOptionsIsRecovering = false;
         wizardController.walletOptionsIsRecoveringFromDevice = false;
         wizardController.walletOptionsDeviceName = '';
@@ -349,6 +349,10 @@ Rectangle {
 
         wizardController.walletOptionsSeed = wallet.seed
 
+        // Set restore height to estimated current height for new wallets
+        var estimatedHeight = Wizard.getApproximateBlockchainHeight(new Date().toISOString().split('T')[0], Utils.netTypeToString());
+        wizardController.walletOptionsRestoreHeight = estimatedHeight > 0 ? estimatedHeight : 0;
+
         // saving wallet in "global" object
         // @TODO: wallet should have a property pointing to the file where it stored or loaded from
         wizardController.m_wallet = wallet;
@@ -491,8 +495,9 @@ Rectangle {
             wizardController.m_wallet = wallet;
             wizardController.walletOptionsIsRecoveringFromDevice = true;
             if (!wizardController.walletOptionsDeviceIsRestore) {
-                // User creates a hardware wallet for the first time. Use a recent block height from API.
-                wizardController.walletOptionsRestoreHeight = wizardController.m_wallet.walletCreationHeight;
+                // User creates a hardware wallet for the first time. Use estimated block height for XMC.
+                var estimatedHeight = Wizard.getApproximateBlockchainHeight(new Date().toISOString().split('T')[0], Utils.netTypeToString());
+                wizardController.walletOptionsRestoreHeight = estimatedHeight > 0 ? estimatedHeight : wizardController.m_wallet.walletCreationHeight;
             }
         } else {
             console.log(wallet.errorString)

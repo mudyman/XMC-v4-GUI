@@ -308,7 +308,7 @@ Rectangle {
                             if (addressBookName) {
                                 title = FontAwesome.addressBook + " " + addressBookName;
                             } else {
-                                title = qsTr("Monero address") + translationManager.emptyString;
+                                title = qsTr("Monero Classic address") + translationManager.emptyString;
                             }
                             if (recipients.length > 1) {
                                 title = "%1. %2 - %3 XMC".arg(index + 1).arg(title).arg(recipient.amount);
