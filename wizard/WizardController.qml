@@ -66,6 +66,7 @@ Rectangle {
         wizardController.walletOptionsRecoverSpendkey = ''
         wizardController.walletOptionsBackup = '';
         wizardController.walletRestoreMode = 'seed';
+        // Set restore height to the current XMC V4 chain height (calculated from XMC V4 genesis block)
         wizardController.walletOptionsRestoreHeight = Wizard.getApproximateBlockchainHeight(new Date().toISOString().split('T')[0], Utils.netTypeToString());
         wizardController.walletOptionsIsRecovering = false;
         wizardController.walletOptionsIsRecoveringFromDevice = false;
@@ -348,10 +349,8 @@ Rectangle {
         var wallet = walletManager.createWallet(tmp_wallet_filename, "", persistentSettings.language_wallet, nettype, kdfRounds)
 
         wizardController.walletOptionsSeed = wallet.seed
-
-        // Set restore height to estimated current height for new wallets
-        var estimatedHeight = Wizard.getApproximateBlockchainHeight(new Date().toISOString().split('T')[0], Utils.netTypeToString());
-        wizardController.walletOptionsRestoreHeight = estimatedHeight > 0 ? estimatedHeight : 0;
+        // Set restore height to the current XMC V4 chain height (calculated from XMC V4 genesis block)
+        wizardController.walletOptionsRestoreHeight = Wizard.getApproximateBlockchainHeight(new Date().toISOString().split('T')[0], Utils.netTypeToString());
 
         // saving wallet in "global" object
         // @TODO: wallet should have a property pointing to the file where it stored or loaded from
@@ -489,15 +488,13 @@ Rectangle {
 
     function onWalletCreated(wallet) {
         splash.close()
-
         var success = wallet.status === Wallet.Status_Ok;
         if (success) {
             wizardController.m_wallet = wallet;
             wizardController.walletOptionsIsRecoveringFromDevice = true;
             if (!wizardController.walletOptionsDeviceIsRestore) {
-                // User creates a hardware wallet for the first time. Use estimated block height for XMC.
-                var estimatedHeight = Wizard.getApproximateBlockchainHeight(new Date().toISOString().split('T')[0], Utils.netTypeToString());
-                wizardController.walletOptionsRestoreHeight = estimatedHeight > 0 ? estimatedHeight : wizardController.m_wallet.walletCreationHeight;
+                // For new hardware wallets, set restore height to the current XMC V4 chain height
+                wizardController.walletOptionsRestoreHeight = Wizard.getApproximateBlockchainHeight(new Date().toISOString().split('T')[0], Utils.netTypeToString());
             }
         } else {
             console.log(wallet.errorString)

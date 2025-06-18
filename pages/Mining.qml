@@ -43,12 +43,6 @@ Rectangle {
     property int threads: idealThreadCount / 2
     property alias stopMiningEnabled: stopSoloMinerButton.enabled
     property string args: ""
-    
-    // Ensure P2Pool mining is always disabled
-    Component.onCompleted: {
-        persistentSettings.allow_p2pool_mining = false;
-        persistentSettings.miningModeSelected = 0; // Always use Solo mining
-    }
     ColumnLayout {
         id: mainLayout
         Layout.fillWidth: true
@@ -111,7 +105,6 @@ Rectangle {
             ColumnLayout {
                 Layout.fillWidth: true
                 Layout.alignment : Qt.AlignTop | Qt.AlignLeft
-                visible: false  // Mining mode dropdown hidden
 
                 MoneroComponents.Label {
                     id: miningModeLabel
@@ -124,17 +117,16 @@ Rectangle {
             ColumnLayout {
                 Layout.topMargin: 5
                 spacing: 10
-                visible: false  // Mining mode dropdown hidden
 
                 MoneroComponents.StandardDropdown {
                     Layout.maximumWidth: 200
                     id: miningModeDropdown
-                    visible: false
-                    currentIndex: 0  // Always use Solo mining
+                    visible: true
+                    currentIndex: persistentSettings.miningModeSelected
                     dataModel: miningModeModel
                     onChanged: {
-                        persistentSettings.allow_p2pool_mining = false;  // Always set to false
-                        persistentSettings.miningModeSelected = 0;  // Always Solo
+                        persistentSettings.allow_p2pool_mining = miningModeDropdown.currentIndex === 1;
+                        persistentSettings.miningModeSelected = miningModeDropdown.currentIndex;
                         walletManager.stopMining();
                         p2poolManager.exit();
                     }
