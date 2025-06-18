@@ -328,6 +328,8 @@ quint8 OSHelper::getNetworkTypeFromFile(const QString &keysPath) const
 
 void OSHelper::openSeedTemplate() const
 {
-    QFile::copy(":/wizard/template.pdf", QDir::tempPath() + "/seed_template.pdf");
-    openFile(QDir::tempPath() + "/seed_template.pdf");
+    QString tempPath = QDir::tempPath() + "/XMC_seed.pdf";
+    QFile::remove(tempPath);  // delete any existing file with the same name
+    QFile::copy(":/wizard/template.pdf", tempPath);
+    openFile(tempPath);
 }
